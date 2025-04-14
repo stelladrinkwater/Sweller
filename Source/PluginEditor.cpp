@@ -1,40 +1,48 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
-//==============================================================================
-NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+#include "MyColours.h"
+ 
+SwellerAudioProcessorEditor::SwellerAudioProcessorEditor (SwellerAudioProcessor& p,
+                                                                juce::AudioProcessorValueTreeState& state,
+                                                                juce::UndoManager& um)
+    : AudioProcessorEditor (&p), audioProcessor (p), undoManager (um)
 {
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setWantsKeyboardFocus (true);
+    setSize (440, 280);
+}
+ 
+SwellerAudioProcessorEditor::~SwellerAudioProcessorEditor()
+{
+}
+ 
+void SwellerAudioProcessorEditor::paint (juce::Graphics& g)
+{
+    g.fillAll (MyColours::black);
+}
+ 
+void SwellerAudioProcessorEditor::resized()
+{
+}
+ 
+bool SwellerAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
+{
+    const auto cmdZ = juce::KeyPress { 'z', juce::ModifierKeys::commandModifier, 0 };
+ 
+    if (key == cmdZ && undoManager.canUndo())
+    {
+        undoManager.undo();
+        return true;
+    }
+ 
+    const auto cmdShiftZ = juce::KeyPress { 'z', juce::ModifierKeys::commandModifier
+                                                 | juce::ModifierKeys::shiftModifier, 0 };
+ 
+    if (key == cmdShiftZ && undoManager.canRedo())
+    {
+        undoManager.redo();
+        return true;
+    }
+ 
+    return false;
 }
 
-NewProjectAudioProcessorEditor::~NewProjectAudioProcessorEditor()
-{
-}
-
-//==============================================================================
-void NewProjectAudioProcessorEditor::paint (juce::Graphics& g)
-{
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-
-    g.setColour (juce::Colours::white);
-    g.setFont (juce::FontOptions (15.0f));
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
-}
-
-void NewProjectAudioProcessorEditor::resized()
-{
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
-}

@@ -23,7 +23,7 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                return juce::String (value, 1) + " %"; },,
+                                                                return juce::String (value, 1) + " %"; },
                                                              nullptr));
     
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::feedback_ratio, 1 },
@@ -33,7 +33,7 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                return juce::String (value, 1) + " %"; },,
+                                                                return juce::String (value, 1) + " %"; },
                                                              nullptr));
     
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::phase_shift_mix, 1 },
@@ -43,7 +43,7 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                return juce::String (value, 1) + " %"; },,
+                                                                return juce::String (value, 1) + " %"; },
                                                              nullptr));
     
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::phase_shift_cutoff, 1 },
@@ -53,7 +53,7 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                return juce::String (value, 1) + " Hz"; },,
+                                                                return juce::String (value, 1) + " Hz"; },
                                                              nullptr));
     
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::phase_shift_q, 1 },
@@ -63,9 +63,11 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                return juce::String (value, 1) + " Q"; },,
+                                                                return juce::String (value, 1) + " Q"; },
                                                              nullptr));
  
+    return layout;
+}
 
  
 //==============================================================================
@@ -239,7 +241,7 @@ bool SwellerAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* SwellerAudioProcessor::createEditor()
 {
     return new SwellerAudioProcessorEditor (*this, apvts, undoManager);
-    /* return new juce::GenericAudioProcessorEditor (*this); */
+    // return new juce::GenericAudioProcessorEditor (*this);
 }
  
 //==============================================================================
@@ -266,6 +268,6 @@ void SwellerAudioProcessor::parameterChanged (const juce::String& parameterID, f
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    // generic for test // return new SwellerAudioProcessor();
-    return new juce::GenericAudioProcessorEditor (*this);
+    return new SwellerAudioProcessor();
+    // return new juce::GenericAudioProcessorEditor (*this);
 }
