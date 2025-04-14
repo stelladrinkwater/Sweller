@@ -1,0 +1,25 @@
+[
+  {
+    "name": "untitled",
+    "preset": {
+      "dry_ratio": {
+        "value": 0.3964019851116626
+      },
+      "feedback_ratio": {
+        "value": 0.13846153846153847
+      },
+      "phase_shift_cutoff": {
+        "value": 0
+      },
+      "phase_shift_mix": {
+        "value": 0.3964019851116626
+      },
+      "phase_shift_q": {
+        "value": 1
+      },
+      "wet_ratio": {
+        "value": 0.3
+      }
+    }
+  }
+]
