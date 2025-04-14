@@ -130,13 +130,8 @@ Hopefully, this will resolve the issue.
 ### MIDI CC and VST3
 VST3 introduced some changes to the way plugins handle MIDI data. One way to make newer VST3 plugins behave more like VST2 is to create Parameters for each MIDI CC value on each MIDI channel. You can dip your toes into the [full discussion](https://forums.steinberg.net/t/vst3-and-midi-cc-pitfall/201879/11) if you want, but we disable this behavior by default. If you really want it, you can enable it by commenting out the appropriate line in `CMakeLists.txt`.
 
-### Working with your RNBO Plugin in Unity
-You can build a dedicated audio plugin for Unity using our [RNBO Unity Audio Plugin repository](https://github.com/Cycling74/rnbo.unity.audioplugin), which also provides an API that facilitates working with your RNBO export in your C# scripting. Check out that repository for more information.
 
-## Customizing the Project
+## References
 
-This project is based on the [JUCE Framework](http://www.juce.com/). Please refer to tutorials from JUCE on building UIs, for instance.
-
-There are details that you might want to change in `App.cmake` for Applications and in `Plugin.cmake` for Plugins.
-
-If you're not interested in the Application or Plugin parts of this project you can remove the associated *include* lines from the `CMakeLists.txt` file.
+[Programming a Custom UI with JUCE](https://rnbo.cycling74.com/learn/programming-a-custom-ui-with-juce)
+[JR-Granular - JUCE & RNBO C++ Export](https://kengo.dev/posts/jr-granular)
