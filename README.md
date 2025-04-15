@@ -2,7 +2,7 @@
 
 Delay + phase shift plugin:
 
-![image](https://github.com/user-attachments/assets/3854826a-2558-4a68-a392-1703032d358e)
+![Video to GIF Converter](https://github.com/user-attachments/assets/1e19a581-4e80-4b67-8d18-cb202a52d47e)
 
 
 ## References
