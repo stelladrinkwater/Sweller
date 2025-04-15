@@ -1,0 +1,12 @@
+make interface green/multicolor
+add audio visualization
+make the dry/wet general faders instead of dials (ask chat where dev go the dial cpp/h if anywhere)
+- ableton style faders
+- oscilloscope/spectrogram overlayed?
+	- monochrmatic
+take standalone out of build
+put build inst. in readme (without uppercase B for foldername)
+add a little png graphic icon (e.g. a wave) that pulses in brightness in resp. to amplitude like the op-1 cow
+develop rnbo patch n paramters more re: dweller
+look into that wysiwyg editor for juce
+publish guithub builds or look into routines (nightly build)

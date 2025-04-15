@@ -10,6 +10,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "Dial.h"
+
 
 //==============================================================================
 /**
@@ -33,6 +35,17 @@ public:
 private:
     SwellerAudioProcessor& audioProcessor;
     juce::UndoManager& undoManager;
+    
+    Dial dryDial;
+    Dial wetDial;
+    Dial feedbackDial;
+    Dial phaseDial;
+    Dial cutoffDial;
+    Dial qDial;
  
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SwellerAudioProcessorEditor)
 };
+
+
+
+

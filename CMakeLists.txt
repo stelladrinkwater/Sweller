@@ -38,7 +38,8 @@ target_sources("${PROJECT_NAME}"
         RnboExport/rnbo_source.cpp
         RnboExport/rnbo/RNBO.cpp
         Source/PluginProcessor.cpp
-        Source/PluginEditor.cpp)
+        Source/PluginEditor.cpp
+        Source/Dial.cpp)
  
 target_compile_features("${PROJECT_NAME}" PUBLIC cxx_std_20)
  
