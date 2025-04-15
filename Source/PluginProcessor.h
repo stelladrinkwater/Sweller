@@ -10,6 +10,9 @@ public:
     //==============================================================================
     SwellerAudioProcessor();
     ~SwellerAudioProcessor() override;
+    
+    juce::AudioBuffer<float> dryBuffer;
+    juce::AudioBuffer<float> wetBuffer;
  
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;

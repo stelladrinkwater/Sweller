@@ -8,7 +8,7 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
  
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::dry_ratio, 1 },
                                                              "dry",
-                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.01f, 0.405f),
+                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.01f, 0.2f),
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
@@ -18,7 +18,7 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
     
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::wet_ratio, 1 },
                                                              "wet",
-                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.01f, 0.405f),
+                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.01f, 0.2f),
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
@@ -219,8 +219,43 @@ bool SwellerAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
  
 void SwellerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    juce::ignoreUnused (midiMessages);
+    // buffer deal with
+    juce::ignoreUnused(midiMessages);
     auto bufferSize = buffer.getNumSamples();
+    
+    // Save a copy of the dry signal
+    if (dryBuffer.getNumSamples() != bufferSize ||
+        dryBuffer.getNumChannels() != buffer.getNumChannels())
+    {
+        dryBuffer.setSize(buffer.getNumChannels(), bufferSize);
+    }
+    dryBuffer.copyFrom(0, 0, buffer, 0, 0, bufferSize);
+    if (buffer.getNumChannels() > 1)
+        dryBuffer.copyFrom(1, 0, buffer, 1, 0, bufferSize);
+
+    rnboObject.prepareToProcess(getSampleRate(),
+                              static_cast<size_t>(bufferSize));
+
+    // Process the signal
+    rnboObject.process(buffer.getArrayOfWritePointers(),
+                     static_cast<RNBO::Index>(buffer.getNumChannels()),
+                     buffer.getArrayOfWritePointers(),
+                     static_cast<RNBO::Index>(buffer.getNumChannels()),
+                     static_cast<RNBO::Index>(bufferSize));
+    
+    // Save a copy of the wet signal
+    if (wetBuffer.getNumSamples() != bufferSize ||
+        wetBuffer.getNumChannels() != buffer.getNumChannels())
+    {
+        wetBuffer.setSize(buffer.getNumChannels(), bufferSize);
+    }
+    wetBuffer.copyFrom(0, 0, buffer, 0, 0, bufferSize);
+    if (buffer.getNumChannels() > 1)
+        wetBuffer.copyFrom(1, 0, buffer, 1, 0, bufferSize);
+
+    // tutorial:
+    juce::ignoreUnused (midiMessages);
+    // auto bufferSize = buffer.getNumSamples();
  
     rnboObject.prepareToProcess (getSampleRate(),
                                  static_cast<size_t> (bufferSize));
